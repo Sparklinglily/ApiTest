@@ -1,5 +1,8 @@
 import 'package:apitest/apiConfig.dart';
 import 'package:apitest/models/album.dart';
+import 'package:apitest/models/photo.dart';
+import 'package:apitest/models/user.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -10,36 +13,59 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  //late keyword means that a non-nullable
-  // keyword will be initialised later in the code.
+  late List<UserModel>? userModel = [];
 
-  //fetch data
-  late Future<Album> futureAlbum;
-
-  @override
   void initState() {
+    fetchData();
+
     super.initState();
-    futureAlbum = fetchAlbum();
+  }
+
+  void fetchData() async {
+    userModel = await ApiConfig().getUsers();
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: FutureBuilder<Album>(
-            future: futureAlbum,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return Text(
-                  snapshot.data!.title,
-                  style: TextStyle(fontSize: 30),
-                );
-              } else if (snapshot.hasError) {
-                return Text('${snapshot.error}');
-              }
-              return CircularProgressIndicator();
-            }),
-      ),
-    );
+        body: userModel == null || userModel!.isEmpty
+            ? const Center(child: CircularProgressIndicator())
+            : Padding(
+                padding: const EdgeInsets.only(top: 30, left: 10, right: 10),
+                child: Flexible(
+                  fit: FlexFit.loose,
+                  child: ListView.builder(
+                      itemCount: userModel!.length,
+                      itemBuilder: (context, index) {
+                        return Card(
+                          child:
+                              Column(mainAxisSize: MainAxisSize.min, children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Expanded(
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Text(userModel![index].id.toString()),
+                                    Text(userModel![index].name),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        Text(userModel![index].email),
+                                        Text(userModel![index].website),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                            )
+                          ]),
+                        );
+                      }),
+                ),
+              ));
   }
 }
