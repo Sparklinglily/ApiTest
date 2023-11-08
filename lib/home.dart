@@ -1,6 +1,7 @@
 import 'package:apitest/apiConfig.dart';
 import 'package:apitest/models/album.dart';
 import 'package:apitest/models/photo.dart';
+import 'package:apitest/models/posts.dart';
 import 'package:apitest/models/user.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -13,7 +14,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late List<UserModel>? userModel = [];
+  late List<Posts>? postModel = [];
 
   void initState() {
     fetchData();
@@ -22,50 +23,54 @@ class _HomePageState extends State<HomePage> {
   }
 
   void fetchData() async {
-    userModel = await ApiConfig().getUsers();
+    postModel = await getPosts();
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: userModel == null || userModel!.isEmpty
+        body: postModel == null || postModel!.isEmpty
             ? const Center(child: CircularProgressIndicator())
             : Padding(
                 padding: const EdgeInsets.only(top: 30, left: 10, right: 10),
-                child: Flexible(
-                  fit: FlexFit.loose,
-                  child: ListView.builder(
-                      itemCount: userModel!.length,
-                      itemBuilder: (context, index) {
-                        return Card(
-                          child:
-                              Column(mainAxisSize: MainAxisSize.min, children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Expanded(
+                child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: postModel!.length,
+                    itemBuilder: (context, index) {
+                      return Card(
+                        child: Column(
+
+                            /// mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
                                 child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
+                                  //  mainAxisAlignment:
+                                  // MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    Text(userModel![index].id.toString()),
-                                    Text(userModel![index].name),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        Text(userModel![index].email),
-                                        Text(userModel![index].website),
-                                      ],
+                                    Text(postModel![index].id.toString()),
+                                    Text(postModel![index].title),
+                                    Expanded(
+                                      child: Row(
+                                        // mainAxisAlignment:
+                                        // MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Text(
+                                            postModel![index].userId.toString(),
+                                            maxLines: 1,
+                                            // overflow: TextOverflow.ellipsis,
+                                          ),
+                                          Text(postModel![index].body),
+                                        ],
+                                      ),
                                     )
                                   ],
                                 ),
-                              ),
-                            )
-                          ]),
-                        );
-                      }),
-                ),
+                              )
+                            ]),
+                      );
+                    }),
               ));
   }
 }

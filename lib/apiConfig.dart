@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:apitest/constants.dart';
 import 'package:apitest/models/photo.dart';
+import 'package:apitest/models/posts.dart';
 //import 'package:apitest/models/album.dart';
 import 'package:apitest/models/user.dart';
 import 'package:flutter/material.dart';
@@ -28,21 +29,19 @@ import 'dart:developer';
 //   }
 // }
 
-class ApiConfig {
-  Future<List<UserModel>?> getUsers() async {
-    try {
-      var url = Uri.parse(ApiConstants.baseUrl + ApiConstants.endPoint);
-      var response = await http.get(url);
+Future<List<Posts>?> getPosts() async {
+  try {
+    var url = Uri.parse(ApiConstants.baseUrl + ApiConstants.endPoint);
+    var response = await http.get(url);
 
-      if (response.statusCode == 200) {
-        List<UserModel> model = userModelFromJson(response.body);
-        return model;
-      } else {
-        print('Error message from fetching data ${response.statusCode}');
-        return null;
-      }
-    } catch (e) {
-      print('$e');
+    if (response.statusCode == 200) {
+      List<Posts> posts = postsFromJson(response.body);
+      return posts;
+    } else {
+      print('error from fetching api ${response.statusCode}');
+      return null;
     }
+  } catch (e) {
+    print('$e');
   }
 }
