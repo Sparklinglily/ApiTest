@@ -44,7 +44,7 @@ class _HomePageState extends State<HomePage> {
                             /// mainAxisSize: MainAxisSize.min,
                             children: [
                               Padding(
-                                padding: const EdgeInsets.all(8.0),
+                                padding: const EdgeInsets.all(12.0),
                                 child: Row(
                                   //  mainAxisAlignment:
                                   // MainAxisAlignment.spaceEvenly,
@@ -59,7 +59,7 @@ class _HomePageState extends State<HomePage> {
                                           Text(
                                             postModel![index].userId.toString(),
                                             maxLines: 1,
-                                            // overflow: TextOverflow.ellipsis,
+                                            overflow: TextOverflow.ellipsis,
                                           ),
                                           Text(postModel![index].body),
                                         ],
