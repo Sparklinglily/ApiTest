@@ -30,11 +30,15 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          title: Center(child: Text('Welcome')),
+        ),
         body: postModel == null || postModel!.isEmpty
             ? const Center(child: CircularProgressIndicator())
             : Padding(
                 padding: const EdgeInsets.only(top: 30, left: 10, right: 10),
                 child: ListView.builder(
+                    scrollDirection: Axis.vertical,
                     shrinkWrap: true,
                     itemCount: postModel!.length,
                     itemBuilder: (context, index) {
@@ -46,28 +50,25 @@ class _HomePageState extends State<HomePage> {
                               Padding(
                                 padding: const EdgeInsets.all(12.0),
                                 child: Row(
-                                  //  mainAxisAlignment:
-                                  // MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Text(postModel![index].id.toString()),
-                                    Text(postModel![index].title),
-                                    Expanded(
-                                      child: Row(
-                                        // mainAxisAlignment:
-                                        // MainAxisAlignment.spaceEvenly,
-                                        children: [
-                                          Text(
-                                            postModel![index].userId.toString(),
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                          Text(postModel![index].body),
-                                        ],
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              )
+                                    //  mainAxisAlignment:
+                                    // MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Text(postModel![index].id.toString()),
+                                      Text(postModel![index].title),
+                                    ]),
+                              ),
+                              Row(
+                                // mainAxisAlignment:
+                                // MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Text(
+                                    postModel![index].userId.toString(),
+                                    //  maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  Text(postModel![index].body),
+                                ],
+                              ),
                             ]),
                       );
                     }),
