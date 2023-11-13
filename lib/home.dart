@@ -14,16 +14,15 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late List<Posts>? postModel = [];
+  late List<UserModel>? userModel = [];
 
   void initState() {
-    fetchData();
-
+    fetchUsers();
     super.initState();
   }
 
-  void fetchData() async {
-    postModel = await getPosts();
+  void fetchUsers() async {
+    userModel = await getUsers();
     setState(() {});
   }
 
@@ -33,45 +32,59 @@ class _HomePageState extends State<HomePage> {
         appBar: AppBar(
           title: Center(child: Text('Welcome')),
         ),
-        body: postModel == null || postModel!.isEmpty
+        body: userModel == null || userModel!.isEmpty
             ? const Center(child: CircularProgressIndicator())
-            : Padding(
-                padding: const EdgeInsets.only(top: 30, left: 10, right: 10),
-                child: ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    itemCount: postModel!.length,
-                    itemBuilder: (context, index) {
-                      return Card(
-                        child: Column(
-
-                            /// mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(12.0),
-                                child: Row(
-                                    //  mainAxisAlignment:
-                                    // MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Text(postModel![index].id.toString()),
-                                      Text(postModel![index].title),
-                                    ]),
-                              ),
-                              Row(
-                                // mainAxisAlignment:
-                                // MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Text(
-                                    postModel![index].userId.toString(),
-                                    //  maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  Text(postModel![index].body),
-                                ],
-                              ),
-                            ]),
-                      );
-                    }),
+            : ListView.builder(
+                shrinkWrap: true,
+                itemCount: userModel!.length,
+                itemBuilder: (context, index) => Card(
+                  child: Column(children: [
+                    Text(userModel![index].name),
+                    Text(userModel![index].email),
+                    Text(userModel![index].website),
+                    Text(userModel![index].phone.toString()),
+                  ]),
+                ),
               ));
   }
 }
+
+
+//  postModel == null || postModel!.isEmpty
+//             ? const Center(child: CircularProgressIndicator())
+//             : Padding(
+//                 padding: const EdgeInsets.only(top: 30, left: 10, right: 10),
+//                 child: ListView.builder(
+//                     scrollDirection: Axis.vertical,
+//                     shrinkWrap: true,
+//                     itemCount: postModel!.length,
+//                     itemBuilder: (context, index) {
+//                       return Card(
+//                         child: Column(
+
+//                             /// mainAxisSize: MainAxisSize.min,
+//                             children: [
+//                               Padding(
+//                                 padding: const EdgeInsets.all(12.0),
+//                                 child: Row(
+//                                     //  mainAxisAlignment:
+//                                     // MainAxisAlignment.spaceEvenly,
+//                                     children: [
+//                                       Text(postModel![index].id.toString()),
+//                                       Text(postModel![index].title),
+//                                     ]),
+//                               ),
+//                               Row(
+//                                 // mainAxisAlignment:
+//                                 // MainAxisAlignment.spaceEvenly,
+//                                 children: [
+//                                   Text(
+//                                     postModel![index].userId.toString(),
+//                                     //  maxLines: 1,
+//                                     overflow: TextOverflow.ellipsis,
+//                                   ),
+//                                   Text(postModel![index].body),
+//                                 ],
+//                               ),
+//                             ]),
+//                       // )

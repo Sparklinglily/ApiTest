@@ -29,17 +29,33 @@ import 'dart:developer';
 //   }
 // }
 
-Future<List<Posts>?> getPosts() async {
+// Future<List<Posts>?> getPosts() async {
+//   try {
+//     var url = Uri.parse(ApiConstants.baseUrl + ApiConstants.endPoint);
+//     var response = await http.get(url);
+
+//     if (response.statusCode == 200) {
+//       List<Posts> posts = postsFromJson(response.body);
+//       return posts;
+//     } else {
+//       print('error from fetching api ${response.statusCode}');
+//       return null;
+//     }
+//   } catch (e) {
+//     print('$e');
+//   }
+// }
+
+Future<List<UserModel>?> getUsers() async {
   try {
     var url = Uri.parse(ApiConstants.baseUrl + ApiConstants.endPoint);
     var response = await http.get(url);
 
     if (response.statusCode == 200) {
-      List<Posts> posts = postsFromJson(response.body);
-      return posts;
+      List<UserModel> usermodel = userModelFromJson(response.body);
+      return usermodel;
     } else {
-      print('error from fetching api ${response.statusCode}');
-      return null;
+      print(' error from fetching Api ${response.statusCode}');
     }
   } catch (e) {
     print('$e');
