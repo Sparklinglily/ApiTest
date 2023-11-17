@@ -51,7 +51,7 @@ Future<List<UserModel>?> getUsers() async {
     var url = Uri.parse(ApiConstants.baseUrl + ApiConstants.endPoint);
     var response = await http.get(url);
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 201) {
       List<UserModel> usermodel = userModelFromJson(response.body);
       return usermodel;
     } else {
