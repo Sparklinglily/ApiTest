@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Center(child: Text('Welcome to the API Hub')),
+          title: Center(child: Text('API Hub')),
         ),
         body: userModel == null || userModel!.isEmpty
             ? const Center(child: CircularProgressIndicator())
