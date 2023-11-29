@@ -29,9 +29,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Center(child: Text('Json placholder Test API')),
-        ),
+        appBar: AppBar(),
         body: userModel == null || userModel!.isEmpty
             ? const Center(child: CircularProgressIndicator())
             : ListView.builder(
