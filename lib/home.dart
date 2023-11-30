@@ -29,7 +29,9 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          title: Text('holla'),
+        ),
         body: userModel == null || userModel!.isEmpty
             ? const Center(child: CircularProgressIndicator())
             : ListView.builder(
